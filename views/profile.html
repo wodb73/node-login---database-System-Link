@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="timeline">
+  <div class="followings half">
+    <h2>팔로잉 목록</h2>
+    {% if user.Followings %} {% for following in user.Followings %}
+    <div>{{following.nick}}</div>
+    {% endfor %} {% endif %}
+  </div>
+  <div class="followers half">
+    <h2>팔로워 목록</h2>
+    {% if user.Followers %} {% for follower in user.Followers %}
+    <div>{{follower.nick}}</div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+{% endblock %} =>회원가입 화면을 위한 내용을 views 디렉토리에 join.html 파일을
+만들고 작성 {% extends 'layout.html' %} {% block content %}
+<div class="timeline">
+  <form id="join-form" action="/auth/join" method="post">
+    <div class="input-group">
+      <label for="join-email">이메일</label>
+      <input id="join-email" type="email" name="email" />
+    </div>
+    <div class="input-group">
+      <label for="join-nick">닉네임</label>
+      <input id="join-nick" type="text" name="nick" />
+    </div>
+    <div class="input-group">
+      <label for="join-password">비밀번호</label>
+      <input id="join-password" type="password" name="password" />
+    </div>
+    <button id="join-btn" type="submit" class="btn">회원가입</button>
+  </form>
+</div>
+{% endblock %} {% block script %}
+<script>
+  window.onload = () => {
+    if (new URL(location.href).searchParams.get("error")) {
+      alert("이미 존재하는 이메일입니다.");
+    }
+  };
+</script>
+{% endblock %}
